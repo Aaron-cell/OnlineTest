@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssm.dao.UserDao" >
+<!-- 查询用户是否存在 -->
+	<select id="FindUser" resultType="com.ssm.entity.User" >
+  	select * from t_user where username=#{0} and password=#{1}
+  	</select>
+  	<!-- 查询用户是否已经存在 -->
+  	<select id="FindUserById" resultType="com.ssm.entity.User" parameterType="String">
+  	select * from t_user where username=#{username}
+  	</select>
+  	<!-- 添加用户 -->
+  	<insert id="AlterUser" parameterType="com.ssm.entity.User">
+  	insert into t_user (username,password,type,redate)value(#{username},#{password},#{type},#{redate})
+  	</insert>
+  	<!-- 修改密码 -->
+  	<update id="UserUpdate">
+  		update t_user set password=#{1} where username=#{0}
+  	</update>
+  	<!-- 查询所有用户 -->
+  	<select id="SelectUser" resultType="com.ssm.entity.User">
+  	select * from t_user
+  	</select>
+  	<!-- 每次查询十条用户 -->
+  	<select id="SelectUserLimit" resultType="com.ssm.entity.User">
+  	select * from t_user limit #{0},#{1}
+  	</select>
+  	<!-- 删除一个用户 -->
+  	<delete id="DeleteUser" parameterType="String">
+  		delete from t_user where username=#{username}
+  	</delete>
+  	<!-- 模糊查询一个用户 -->
+  	<select id="InquiryUser" resultType="com.ssm.entity.User" parameterType="String">
+  	select * from t_user where username like concat('%',#{username},'%')
+  	</select>
+  	<!-- 模糊查询十个用户 -->
+  	<select id="InquiryUserLimit" resultType="com.ssm.entity.User" >
+  	select * from t_user where username like concat('%',#{0},'%')  limit #{1},#{2}
+  	</select>
+  </mapper>
